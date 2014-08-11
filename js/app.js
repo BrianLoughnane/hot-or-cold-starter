@@ -19,12 +19,16 @@ $(document).ready(function(event){
 
   	function newNumber() {
   		answer = Math.floor(Math.random() * 100) + 1;
+  		// answer = 25;
   	}
 
   	function newGame() {
   		newNumber();
 	  	count = 0;
+	  	dif = null;
+	  	guess = null;
   		$("#feedback").text("Make your Guess");
+		$("#hint").text("");
 		$("#count").text(0);
 		$("#guessList").empty();
 
@@ -43,7 +47,23 @@ $(document).ready(function(event){
 			$("#feedback").text("Very Hot");
 		} else if (a === 0) {
 			$("#feedback").text("Correct!  Congratulations!");
+			$("#hint").text("=)");
 		}
+  	}
+
+  	function hint(a, i, c) {
+
+  		var difI = Math.abs(a-i);
+  		var difC = Math.abs(a-c);
+
+  		if(difC > difI) {
+  			$("#hint").text("Getting Hotter...");
+  		} else if (difI > difC) {
+  			$("#hint").text("Getting Colder...");
+  		} else if (difI === difC){
+  			$("#hint").text("Same heat");  			
+  		} 
+
   	}
 
 
@@ -54,13 +74,17 @@ $(document).ready(function(event){
   		function(event) {
   			event.stopPropagation();
   			event.preventDefault();
-
+    		
   			var guess = $("#userGuess").val();
-    		var dif = Math.abs(answer - guess);
-    		// var dif1 = dif;
+	  		var initDif = dif;    		
+
+    		dif = Math.abs(answer - guess);
+  			
 
   			if ((101 > guess >= 1) && (guess % 1 === 0)) {
-	   			feedback(dif);
+	   			// feedback(dif);
+	  			hint(answer, initDif, dif);
+	  			feedback(dif);
 	  			count++;
 				$("#count").text(count);
 				$("#guessList").append('<li>'+guess+'</li>');
@@ -68,8 +92,8 @@ $(document).ready(function(event){
   			} else {
   				alert("Please enter a whole number from 1 to 100");
   			}
-
-
+  		
+  		
   		}
   	);  	
 
