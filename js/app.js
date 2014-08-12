@@ -25,8 +25,8 @@ $(document).ready(function(event){
   	function newGame() {
   		newNumber();
 	  	count = 0;
-	  	dif = null;
-	  	guess = null;
+	  	dif = 101;
+
   		$("#feedback").text("Make your Guess");
 		$("#hint").text("");
 		$("#count").text(0);
